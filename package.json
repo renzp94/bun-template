@@ -1,0 +1,50 @@
+{
+  "name": "bun-template",
+  "version": "0.0.0",
+  "description": "bun开发模板",
+  "type": "module",
+  "main": "dist/index.js",
+  "files": ["dist"],
+  "types": "dist/index.d.ts",
+  "author": "renzp <1074720760.qq.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renzp94/bun-template.git"
+  },
+  "homepage": "https://github.com/renzp94/bun-template#readme",
+  "bugs": {
+    "url": "https://github.com/renzp94/bun-template/issues"
+  },
+  "keywords": ["bun-template"],
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged",
+    "commit-msg": "npx --no -- commitlint --edit $1"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts}": ["biome check", "biome format --write"]
+  },
+  "scripts": {
+    "prepare": "npx simple-git-hooks",
+    "lint": "biome check --apply-unsafe src && biome format --write src",
+    "build": "bun run scripts/build.ts",
+    "pub:npm": "bun run scripts/pub-npm.ts",
+    "pub:jsr": "bun run scripts/pub-jsr.ts",
+    "pub:all": "bun run scripts/pub-all.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.7.0",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@types/bun": "latest",
+    "bun-plugin-dts": "^0.2.3",
+    "lint-staged": "^15.2.4",
+    "simple-git-hooks": "^2.11.1",
+    "standard-version": "^9.5.0",
+    "typescript": "^5.4.5"
+  }
+}
