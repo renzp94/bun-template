@@ -1,42 +1,9 @@
-import { exists, readdir, unlink } from 'node:fs/promises'
-import type { BuildConfig } from 'bun'
-
-export const defineConfigs = (configs: BuildConfig) => configs
-
-/**
- * 删除dist 目录
- */
-export const rmDist = async () => {
-  const hasDist = await exists('./dist')
-  if (hasDist) {
-    const distFiles = await readdir('./dist')
-    const rmFiles = distFiles.map((file) => {
-      return unlink(`./dist/${file}`)
-    })
-
-    await Promise.all(rmFiles)
-  }
-}
-
-/**
- * 获取入口文件
- */
-export const getEntrypoints = async () => {
-  const files = await readdir('./src')
-  const entrypoints = files
-    .filter((file) => !file.includes('_'))
-    .map((file) => `./src/${file}`)
-
-  return entrypoints
-}
+import { exists, readdir } from 'node:fs/promises'
 
 /**
  * 打包
  */
-export const build = async (configs: BuildConfig) => {
-  await rmDist()
-  return Bun.build(configs)
-}
+export const build = () => Bun.$`bun run build`
 
 /**
  * npm发布
